@@ -1,0 +1,60 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
+      layout:decorate="layout/main.html">
+<div layout:fragment="content">
+    <div class="row mt-2 justify-content-center">
+        <div class="col-6 mx-auto">
+            <h5>Hello <span th:text="${#authentication.principal.fullName}"></span></h5>
+        </div>
+    </div>
+
+    <div class="row mt-2">
+        <div class="col-4 mx-auto">
+            <div class="alert alert-danger alert-dismissible fade show" role="alert"
+                 th:if="${param.errorpwd != null}">
+                <strong>Incorrect password!</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <div class="alert alert-danger alert-dismissible fade show" role="alert"
+                 th:if="${param.errorpasswords != null}">
+                <strong>Passwords don't match!</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <div class="alert alert-success alert-dismissible fade show" role="alert"
+                 th:if="${param.success != null}">
+                <strong>Password changed successfully!</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <form th:action="@{'/updatepassword'}" method="post">
+                <div class="mb-3">
+                    <label class="form-label" for="id1">Current Password</label>
+                    <input class="form-control" type="password" id="id1" name="current_password">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="id2">New Password</label>
+                    <input type="password" class="form-control" id="id2" name="new_password">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="id3">Repeat New Password</label>
+                    <input type="password" class="form-control" id="id3" name="re_new_password">
+                </div>
+                <button class="btn btn-primary">Change Password</button>
+            </form>
+        </div>
+
+    </div>
+
+
+<!--    <a th:href="@{'/'}">Home</a>-->
+<!--    <form th:action="@{'/logout'}" method="post">-->
+<!--        <button>Sign out</button>-->
+<!--    </form>-->
+
+<!--    <div th:each="role : ${#authentication.principal.roles}">-->
+<!--        <div th:text="${role.name}"></div>-->
+<!--    </div>-->
+<!--    <button sec:authorize="hasAuthority('Admin')">test Admin</button>-->
+<!--    <button sec:authorize="hasAuthority('User')">test User</button>-->
+</div>
+</html>

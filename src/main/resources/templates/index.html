@@ -1,0 +1,23 @@
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
+      layout:decorate="layout/main.html">
+
+<div layout:fragment="content">
+
+<!--    <a sec:authorize="isAnonymous()" th:href="@{'/signin'}">SIGN IN</a>-->
+<!--    <a sec:authorize="isAuthenticated()" th:href="@{'/profile'}">Profile</a>-->
+    <div class="row mt-2">
+        <div class="col-4 mx-auto">
+            <form class="d-flex" role="search">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+</html>
