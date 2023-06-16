@@ -1,0 +1,37 @@
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
+      layout:decorate="layout/main.html">
+
+<div layout:fragment="content">
+    <div hidden id="productId" th:text="${product.getId()}"></div>
+    <div id="productdetails"></div>
+    <script type="text/javascript">
+        let id = document.getElementById("productId").innerText
+        alert(id)
+        productDetails(id)
+        function productDetails(id){
+            let req = new XMLHttpRequest()
+            req.onload = function () {
+                let html = ""
+                let productView = JSON.parse(req.responseText)
+                html +="<table>"
+                html +="<tbody>"
+                html +="<tr>"
+                html +="<td>"+productView.name+"</td>"
+                html +="</tr>"
+                html +="</tbody>"
+                html +="</table>"
+                document.getElementById("productdetails").innerHTML=html
+            }
+            req.open("GET","http://localhost:8080/api/products/" + id)
+            req.send()
+        }
+
+    </script>
+</div>
+
+
+
+</html>

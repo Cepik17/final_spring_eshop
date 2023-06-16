@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout/main.html">
+<div layout:fragment="content">
+    <div id="products" class="mt-3"></div>
+    <script type="text/javascript">
+        loadProducts()
+        function loadProducts() {
+            let req = new XMLHttpRequest()
+            req.open("GET", "http://localhost:8080/api/products/")
+            req.send()
+            let html = ""
+            req.onload = function () {
+                let array = JSON.parse(req.responseText)
+
+                //     html += "<div class='row text-center'>"
+                //
+                // for (let i = 0; i < array.length; i++) {
+                //     html += "<div class='col-3'>"
+                //     html += "<div class=\"card mb-4 rounded-3 shadow-sm\">\n" +
+                //         "                <div class=\"card-header py-3\">\n" +
+                //         "                  <h4 class=\"my-0 fw-normal\">" + array[i].name + "</h4>\n" +
+                //         "                </div>\n" +
+                //         "                <div class=\"card-body\">\n" +
+                //         "                  <h5 class=\"card-title pricing-card-title\">" + array[i].price + "</h5>\n" +
+                //         "                  <ul class=\"list-unstyled mt-3 mb-4\">\n" +
+                //         "                    <li>" + array[i].rating + "</li>\n" +
+                //         "                    <li><button type=\"button\" class=\"btn\" style=\"background-color: #e3f2fd;\">Details</button></li>\n" +
+                //         "                  </ul>\n" +
+                //         "                  <button type=\"button\" class=\"w-100 btn btn-lg\" style=\"background-color: #e3f2fd;\">Add to cart</button>\n" +
+                //         "                </div>\n" +
+                //         "              </div>"
+                //     html += "</div>"
+                //     html += "</div>"
+                // }
+                html += "<div class=\"row text-center\">"
+                for (let i = 0; i < array.length; i++) {
+                    html += "<div class=\"col-3\">"
+                    html += "<div class=\"card mb-4 rounded-3 shadow-sm\">"
+                    html += "<div class=\"card-header py-3\">"
+                    html += "<h4 class=\"my-0 fw-normal\">" + array[i].name + "</h4>"
+                    html += "</div>"
+                    html += "<div class=\"card-body\">"
+                    html += "<h5 class=\"card-title pricing-card-title\">" + array[i].price + "</h5>"
+                    // html += "<p class=\"card-text\">" + array[i].price + "</p>"
+                    // html += "<p class=\"card-text\">Rating: " + array[i].rating + "</p>"
+                    html += "<ul class=\"list-unstyled mt-3 mb-4\">"
+                    html += "<li>Rating: " + array[i].rating + "</li>"
+                    html += "<li>Comments(" + array[i].rating + ")</li>"
+                    html += "<li><a type=\"button\" class=\"btn btn-lg mt-1 w-50\" style='background-color:#e3f2fd' " +
+                        "href='/productdetails/"+array[i].id+"'>Details</a></li>"
+                    html += "</ul>"
+                    html += "<button type=\"button\" class=\"btn w-100 btn btn-lg\" style='background-color: #e3f2fd'>Add to cart</button>"
+                    html += "</div>"
+                    html += "</div>"
+                    html += "</div>"
+                }
+                html += "</div>";
+                document.getElementById("products").innerHTML = html
+            }
+        }
+
+
+    </script>
+</div>
+</html>
