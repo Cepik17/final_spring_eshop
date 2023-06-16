@@ -36,7 +36,7 @@ public class ProductServiceImpl implements ProductService {
     private ProductMapper productMapper;
 
     @Override
-    public List<ProductView> getProducts() {
+    public List<ProductView> getAllProducts() {
         List<Product> products = productRepository.findAll();
         return productMapper.toViewList(products);
     }

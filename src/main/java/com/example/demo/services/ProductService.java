@@ -7,7 +7,7 @@ import com.example.demo.dtos.SpecsCreate;
 import java.util.List;
 
 public interface ProductService {
-    List<ProductView> getProducts();
+    List<ProductView> getAllProducts();
 
     ProductView getProductById(Long id);
 
