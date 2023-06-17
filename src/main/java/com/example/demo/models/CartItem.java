@@ -3,25 +3,22 @@ package com.example.demo.models;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @Entity
-@Table(name = "products")
+@Table(name="cart_items")
 @Getter
 @Setter
-public class Product {
-
+public class CartItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
-    private double price;
-    private String brand;
-    private String category;
-    private double rating;
-    private String isHotDeal;
 //    @ManyToOne
 //    private Cart cart;
     @OneToOne
-    private Specs specs;
+    private Product product;
+    private int amount;
+
+
 
 }

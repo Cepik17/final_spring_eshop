@@ -16,8 +16,10 @@ public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToOne
-    private User user;
-    @ManyToMany(fetch = FetchType.EAGER)
-    private List<Product> products;
+//    @OneToOne
+//    private User user;
+//    @ManyToMany(fetch = FetchType.EAGER)
+//    private List<Product> products;
+    @OneToMany
+    private List<CartItem> cartItems;
 }

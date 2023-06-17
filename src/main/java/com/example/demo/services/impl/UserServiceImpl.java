@@ -45,6 +45,7 @@ public class UserServiceImpl implements UserService {
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
             return (User) authentication.getPrincipal();
         }
+        System.out.println("userservice");
         return null;
     }
 
@@ -110,6 +111,11 @@ public class UserServiceImpl implements UserService {
             redirectValue = "edituser?successdelete";
         }
         return redirectValue;
+    }
+
+    @Override
+    public User getUserById(Long id) {
+        return userRepository.findById(id).orElse(null);
     }
 
 

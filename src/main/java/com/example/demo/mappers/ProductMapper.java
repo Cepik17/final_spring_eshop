@@ -15,4 +15,6 @@ public interface ProductMapper {
     List<ProductView> toViewList(List<Product> products);
 
     Product toEntity(ProductCreate productCreate);
+
+    Product toEntity(ProductView ProductView);
 }

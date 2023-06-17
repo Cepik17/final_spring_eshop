@@ -44,6 +44,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductView getProductById(Long id) {
         Product product = productRepository.findById(id).orElseThrow();
+       // System.out.println("service:" + product.isHotDeal());
         return productMapper.toView(product);
     }
 

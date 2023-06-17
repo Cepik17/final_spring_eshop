@@ -13,28 +13,9 @@
             req.onload = function () {
                 let array = JSON.parse(req.responseText)
 
-                //     html += "<div class='row text-center'>"
-                //
-                // for (let i = 0; i < array.length; i++) {
-                //     html += "<div class='col-3'>"
-                //     html += "<div class=\"card mb-4 rounded-3 shadow-sm\">\n" +
-                //         "                <div class=\"card-header py-3\">\n" +
-                //         "                  <h4 class=\"my-0 fw-normal\">" + array[i].name + "</h4>\n" +
-                //         "                </div>\n" +
-                //         "                <div class=\"card-body\">\n" +
-                //         "                  <h5 class=\"card-title pricing-card-title\">" + array[i].price + "</h5>\n" +
-                //         "                  <ul class=\"list-unstyled mt-3 mb-4\">\n" +
-                //         "                    <li>" + array[i].rating + "</li>\n" +
-                //         "                    <li><button type=\"button\" class=\"btn\" style=\"background-color: #e3f2fd;\">Details</button></li>\n" +
-                //         "                  </ul>\n" +
-                //         "                  <button type=\"button\" class=\"w-100 btn btn-lg\" style=\"background-color: #e3f2fd;\">Add to cart</button>\n" +
-                //         "                </div>\n" +
-                //         "              </div>"
-                //     html += "</div>"
-                //     html += "</div>"
-                // }
                 html += "<div class=\"row text-center\">"
                 for (let i = 0; i < array.length; i++) {
+                    let productId = array[i].id
                     html += "<div class=\"col-3\">"
                     html += "<div class=\"card mb-4 rounded-3 shadow-sm\">"
                     html += "<div class=\"card-header py-3\">"
@@ -45,12 +26,14 @@
                     // html += "<p class=\"card-text\">" + array[i].price + "</p>"
                     // html += "<p class=\"card-text\">Rating: " + array[i].rating + "</p>"
                     html += "<ul class=\"list-unstyled mt-3 mb-4\">"
+                    html += "<li>Deal of th day: " + array[i].isHotDeal + "</li>"
                     html += "<li>Rating: " + array[i].rating + "</li>"
                     html += "<li>Comments(" + array[i].rating + ")</li>"
                     html += "<li><a type=\"button\" class=\"btn btn-lg mt-1 w-50\" style='background-color:#e3f2fd' " +
                         "href='/productdetails/"+array[i].id+"'>Details</a></li>"
                     html += "</ul>"
-                    html += "<button type=\"button\" class=\"btn w-100 btn btn-lg\" style='background-color: #e3f2fd'>Add to cart</button>"
+                    html += "<button onclick='addToCart("+array[i].id+")' type=\"button\" class=\"btn w-100 btn btn-lg\" " +
+                        "style='background-color: #e3f2fd'>Add to cart</button>"
                     html += "</div>"
                     html += "</div>"
                     html += "</div>"
@@ -59,8 +42,38 @@
                 document.getElementById("products").innerHTML = html
             }
         }
+        function addToCart(productId){
+            alert(productId)
+            let req = new XMLHttpRequest();
+            let createCart = {
+                "productId" : productId,
+                "amount" : 1
+            }
+            req.open("POST", "http://localhost:8080/api/cartitems")
+            req.setRequestHeader("Content-type", "application/json")
+            req.send(JSON.stringify(createCart))
+            req.onload = function () {
+                loadProducts()
+            }
+        }
+        function getCurrentUser(){
+            let req = new XMLHttpRequest();
+            req.open("GET", "http://localhost:8080/api/users");
+            req.setRequestHeader("Content-type", "application/json");
+            req.onload = function() {
+                if (req.status === 200) {
+                    let user = JSON.parse(req.responseText);
+                    alert(user.name);
+                } else {
 
+                    alert("Ошибка при получении пользователя");
+                }
+            }
+            req.send();
+
+        }
 
     </script>
+
 </div>
 </html>

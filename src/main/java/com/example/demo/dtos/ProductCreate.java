@@ -11,9 +11,8 @@ public class ProductCreate {
 
     private String name;
     private double price;
-    private int amount;
     private String brand;
     private String category;
-    private boolean isHotDeal;
+    private String isHotDeal;
     private SpecsCreate specs;
 }

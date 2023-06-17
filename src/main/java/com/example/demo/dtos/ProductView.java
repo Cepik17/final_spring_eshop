@@ -14,6 +14,6 @@ public class ProductView {
     private String brand;
     private String category;
     private double rating;
-    private boolean isHotDeal;
+    private String isHotDeal;
     private SpecsView specs;
 }
