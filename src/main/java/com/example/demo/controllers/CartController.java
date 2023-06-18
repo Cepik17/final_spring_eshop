@@ -25,8 +25,9 @@ public class CartController {
     private UserService userService;
 
     @PostMapping
-    public Cart createCart(HttpServletRequest request){
-        return cartService.createCart(request);
+    public Cart createCart(@RequestParam (name= "email") String email){
+        return cartService.getOrCreateCart(email);
+
        // cartItemService.addToCart(userId,productId,amount);
     }
 

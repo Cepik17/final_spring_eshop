@@ -86,4 +86,36 @@ public class CartServiceImpl implements CartService {
 //        return cart;
 //    }
 
+    @Override
+    public Cart getOrCreateCart(String email) {
+        System.out.println("cartservice");
+//        Cart cart;
+//        if (user != null) {
+//            cart = cartRepository.findByUser(user);
+//            if (cart == null) {
+//                cart = new Cart();
+//                cart.setUser(user);
+//                cart.setCartItems(new ArrayList<>());
+//                cart = cartRepository.save(cart);
+//            }
+//        } else {
+//            HttpSession session = request.getSession();
+//            cart = (Cart) session.getAttribute("cart");
+//            if (cart == null) {
+//                cart = new Cart();
+//                cart.setCartItems(new ArrayList<>());
+//                session.setAttribute("cart", cart);
+//            }
+//        }
+//        return cart;
+        User user = userService.getUserByEmail(email);
+        Cart cart = cartRepository.findByUser(user);
+        if (cart == null) {
+            cart = new Cart();
+            cart.setUser(user);
+            cart.setCartItems(new ArrayList<>());
+            cart = cartRepository.save(cart);
+        }
+        return cart;
+    }
 }
