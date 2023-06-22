@@ -16,8 +16,47 @@
             </form>
         </div>
     </div>
+    <div class="row text-center mt-2">
+        <div class="col-3">
+            <div class="card mb-4 rounded-3 shadow-sm">
+                <div class="card-header py-3">
+                    <h4 class="my-0 fw-normal">name</h4>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title pricing-card-title">price</h5>
+                    <ul class="list-unstyled mt-3 mb-4">
+                        <li>Deal of th day:</li>
+                        <li>Rating:</li>
+                        <li>Comments()</li>
+                        <li><a type="button" class="btn btn-lg mt-1 w-50"
+                               style="background-color:#e3f2fd">Details</a></li>
+                    </ul>
+                    <button
+                            type="button" class="btn w-100 btn btn-lg"
+                            style="background-color: #e3f2fd">Add to cart</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-
+<!--    <script type="text/javascript">-->
+<!--        function addToCart(userId, productId){-->
+<!--            alert(productId)-->
+<!--            let req = new XMLHttpRequest();-->
+<!--            let createCart = {-->
+<!--                "userId": userId,-->
+<!--                "productId" : productId,-->
+<!--                "amount" : 1,-->
+<!--            }-->
+<!--            req.open("POST", "http://localhost:8080/api/cartitems")-->
+<!--            req.setRequestHeader("Content-type", "application/json")-->
+<!--            req.send(JSON.stringify(createCart))-->
+<!--            req.onload = function () {-->
+<!--                //     location.href="/signin"-->
+<!--                loadProducts()-->
+<!--            }-->
+<!--        }-->
+<!--    </script>-->
 
 
 </html>

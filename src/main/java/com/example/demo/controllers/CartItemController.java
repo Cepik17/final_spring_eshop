@@ -41,13 +41,13 @@ public class CartItemController {
 
     @PostMapping
     public Cart addToCart(@RequestBody CartRequest cartRequest){
-        User user = userService.getEntityById(cartRequest.getUserId());
-        UserView userView = userMapper.toView(user);
-
-        Product product = productService.getEntityById(cartRequest.getProductId());
-        ProductToCart productToCart = productMapper.toCart(product);
-        System.out.println("cont");
-        return cartItemService.addToCart(userView, productToCart, cartRequest.getAmount());
+//        User user = userService.getEntityById(cartRequest.getUserId());
+//        UserView userView = userMapper.toView(user);
+//
+//        Product product = productService.getEntityById(cartRequest.getProductId());
+//        ProductToCart productToCart = productMapper.toCart(product);
+//        System.out.println("cont");
+        return cartItemService.addToCart(cartRequest, cartRequest.getAmount());
     }
 
     @GetMapping

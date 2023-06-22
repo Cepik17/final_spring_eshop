@@ -4,10 +4,8 @@ import com.example.demo.dtos.ProductToCart;
 import com.example.demo.dtos.ProductView;
 import com.example.demo.dtos.UserView;
 import com.example.demo.mappers.ProductMapper;
-import com.example.demo.models.Cart;
-import com.example.demo.models.CartItem;
-import com.example.demo.models.Product;
-import com.example.demo.models.User;
+import com.example.demo.mappers.UserMapper;
+import com.example.demo.models.*;
 import com.example.demo.repositories.CartItemRepository;
 import com.example.demo.repositories.CartRepository;
 import com.example.demo.services.CartItemService;
@@ -41,6 +39,9 @@ public class CartItemServiceImpl implements CartItemService {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private UserMapper userMapper;
+
 //    @Override
 //    public void addToCart(Long userId, Long productId, int amount) {
 //        Cart cart = cartService.getOrCreateCart(userId);
@@ -55,31 +56,22 @@ public class CartItemServiceImpl implements CartItemService {
 //        cartRepository.save(cart);
 //    }
     @Override
-    public Cart addToCart(UserView userView, ProductToCart productToCart, int amount) {
+    public Cart addToCart(CartRequest cartRequest, int amount) {
+        User user = userService.getEntityById(cartRequest.getUserId());
+        UserView userView = userMapper.toView(user);
+        Product product = productService.getEntityById(cartRequest.getProductId());
+        ProductToCart productToCart = productMapper.toCart(product);
         System.out.println("cartitemservice");
         Cart cart = cartService.getOrCreateCart(userView);
-
-//        ProductView productView = productService.getProductById(productId);
-//        Product product = productMapper.toEntity(productView);
-//
-//        CartItem cartItem = new CartItem();
-//        cartItem.setProduct(product);
-//        cartItem.setAmount(amount);
-//        Cart cart = cartService.createCart(request);
-//       // cart.getCartItems().add(cartItem);
-//        cart.setCartItems(List.of(cartItem));
-//        cartRepository.save(cart);
         CartItem cartItem = findCartItem(cart, productToCart);
         if (cartItem == null) {
             cartItem = new CartItem();
-           // ProductView productView = productService.getProductById(productId);
-           //Product product = productMapper.toEntity(productToCart);
-            //ProductView productView = productService.getProductById(productToCart.getId());
-            Long productId = productToCart.getId();
-            String productname= productToCart.getName();
-            System.out.println("productId = " + productId + "and name" + productname);
-            Product product = productService.getEntityById(productId);
+//            Long productId = productToCart.getId();
+//            String productName= productToCart.getName();
+//            System.out.println("productId = " + productId + "and name" + productName);
+//            Product product = productService.getEntityById(productId);
             cartItem.setProduct(product);
+            //   cartItem.setCart(cart);
             cartItemRepository.save(cartItem);
             cart.getCartItems().add(cartItem);
         }

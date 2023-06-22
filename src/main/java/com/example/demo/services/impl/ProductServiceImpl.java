@@ -43,6 +43,12 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public List<ProductView> getAllHotDeals() {
+        List<Product> products=  productRepository.findAllHotDeals();
+        return productMapper.toViewList(products);
+    }
+
+    @Override
     public ProductView getProductById(Long id) {
         Product product = productRepository.findById(id).orElseThrow();
        // System.out.println("service:" + product.isHotDeal());

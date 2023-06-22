@@ -13,12 +13,18 @@ public class CartItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-//    @ManyToOne
-//    private Cart cart;
     @OneToOne
     private Product product;
     private int amount;
+    private double totalPrice;
 
+    public void setAmount(int amount) {
+        this.amount = amount;
+        updateTotalPrice();
+    }
 
+    private void updateTotalPrice() {
+        totalPrice = product.getPrice() * amount;
+    }
 
 }

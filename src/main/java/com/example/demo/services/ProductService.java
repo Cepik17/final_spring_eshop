@@ -10,6 +10,8 @@ import java.util.List;
 public interface ProductService {
     List<ProductView> getAllProducts();
 
+    List<ProductView> getAllHotDeals();
+
     ProductView getProductById(Long id);
 
     ProductView createProduct(ProductCreate productCreate, SpecsCreate specsCreate);

@@ -18,8 +18,14 @@ public class Cart {
     private Long id;
     @OneToOne
     private User user;
-//    @ManyToMany(fetch = FetchType.EAGER)
-//    private List<Product> products;
     @OneToMany
     private List<CartItem> cartItems;
+
+    public double getTotalPrice() {
+        double totalPrice = 0.0;
+        for (CartItem cartItem : cartItems) {
+            totalPrice += cartItem.getTotalPrice();
+        }
+        return totalPrice;
+    }
 }
