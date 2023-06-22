@@ -12,6 +12,7 @@ import com.example.demo.repositories.ProductRepository;
 import com.example.demo.repositories.SpecsRepository;
 import com.example.demo.services.ProductService;
 import com.example.demo.services.SpecsService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -61,5 +62,11 @@ public class ProductServiceImpl implements ProductService {
         //productView.setSpecs(specsView);
         System.out.println("createproduct");
         return productMapper.toView(product);
+    }
+
+    @Override
+    public Product getEntityById(Long id) {
+        System.out.println("procuctservice id=" + id);
+        return productRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Product with id " + id + " not found"));
     }
 }

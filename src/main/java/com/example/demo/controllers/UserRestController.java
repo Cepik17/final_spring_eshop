@@ -18,12 +18,15 @@ public class UserRestController {
     private UserService userService;
 
     @GetMapping
-    public ResponseEntity<User> getCurrentUser() {
-        User user = userService.getCurrentUser();
-        if (user != null) {
-            return ResponseEntity.ok(user);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+//    public ResponseEntity<User> getCurrentUser() {
+//        User user = userService.getCurrentUser();
+//        if (user != null) {
+//            return ResponseEntity.ok(user);
+//        } else {
+//            return ResponseEntity.notFound().build();
+//        }
+//    }
+    public User getCurrentUser(){
+        return userService.getCurrentUser();
     }
 }

@@ -1,5 +1,6 @@
 package com.example.demo.services;
 
+import com.example.demo.dtos.UserView;
 import com.example.demo.models.Cart;
 import com.example.demo.models.Product;
 import com.example.demo.models.User;
@@ -14,5 +15,5 @@ public interface CartService {
 
     List<Cart> getAllCarts();
 
-    Cart getOrCreateCart(String email);
+    Cart getOrCreateCart(UserView userView);
 }

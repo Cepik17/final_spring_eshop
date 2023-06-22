@@ -1,5 +1,6 @@
 package com.example.demo.controllers;
 
+import com.example.demo.dtos.UserView;
 import com.example.demo.models.Cart;
 import com.example.demo.models.Product;
 import com.example.demo.models.User;
@@ -25,8 +26,8 @@ public class CartController {
     private UserService userService;
 
     @PostMapping
-    public Cart createCart(@RequestParam (name= "email") String email){
-        return cartService.getOrCreateCart(email);
+    public Cart createCart(@RequestBody UserView userView){
+        return cartService.getOrCreateCart(userView);
 
        // cartItemService.addToCart(userId,productId,amount);
     }

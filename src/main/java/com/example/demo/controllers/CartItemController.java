@@ -1,10 +1,13 @@
 package com.example.demo.controllers;
 
-import com.example.demo.models.Cart;
-import com.example.demo.models.CartItem;
-import com.example.demo.models.User;
+import com.example.demo.dtos.ProductToCart;
+import com.example.demo.dtos.UserView;
+import com.example.demo.mappers.ProductMapper;
+import com.example.demo.mappers.UserMapper;
+import com.example.demo.models.*;
 import com.example.demo.services.CartItemService;
 import com.example.demo.services.CartService;
+import com.example.demo.services.ProductService;
 import com.example.demo.services.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,13 +29,25 @@ public class CartItemController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private ProductService productService;
+
+    @Autowired
+    private UserMapper userMapper;
+
+    @Autowired
+    private ProductMapper productMapper;
+
 
     @PostMapping
-    public void addToCart(@RequestParam (name= "email") String email,
-                          @RequestParam (name= "productId") Long productId,
-                          @RequestParam (name= "amount") int amount){
+    public Cart addToCart(@RequestBody CartRequest cartRequest){
+        User user = userService.getEntityById(cartRequest.getUserId());
+        UserView userView = userMapper.toView(user);
+
+        Product product = productService.getEntityById(cartRequest.getProductId());
+        ProductToCart productToCart = productMapper.toCart(product);
         System.out.println("cont");
-        cartItemService.addToCart(email, productId, amount);
+        return cartItemService.addToCart(userView, productToCart, cartRequest.getAmount());
     }
 
     @GetMapping

@@ -1,5 +1,7 @@
 package com.example.demo.services.impl;
 
+import com.example.demo.dtos.UserView;
+import com.example.demo.mappers.UserMapper;
 import com.example.demo.models.Cart;
 import com.example.demo.models.Product;
 import com.example.demo.models.User;
@@ -9,6 +11,7 @@ import com.example.demo.services.CartService;
 import com.example.demo.services.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class CartServiceImpl implements CartService {
 
     @Autowired
@@ -29,6 +33,9 @@ public class CartServiceImpl implements CartService {
 
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private UserMapper userMapper;
 
 //    @Override
 //    public Cart createCart(User user, List<Product> products) {
@@ -87,7 +94,7 @@ public class CartServiceImpl implements CartService {
 //    }
 
     @Override
-    public Cart getOrCreateCart(String email) {
+    public Cart getOrCreateCart(UserView userView) {
         System.out.println("cartservice");
 //        Cart cart;
 //        if (user != null) {
@@ -108,7 +115,8 @@ public class CartServiceImpl implements CartService {
 //            }
 //        }
 //        return cart;
-        User user = userService.getUserByEmail(email);
+        User user = userMapper.toEntity(userView);
+
         Cart cart = cartRepository.findByUser(user);
         if (cart == null) {
             cart = new Cart();

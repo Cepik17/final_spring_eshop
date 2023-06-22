@@ -19,4 +19,6 @@ public interface UserService extends UserDetailsService {
     User getUserById(Long id);
 
     User getUserByEmail(String email);
+
+    User getEntityById(Long userId);
 }

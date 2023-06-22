@@ -1,6 +1,7 @@
 package com.example.demo.mappers;
 
 import com.example.demo.dtos.ProductCreate;
+import com.example.demo.dtos.ProductToCart;
 import com.example.demo.dtos.ProductView;
 import com.example.demo.models.Product;
 import org.mapstruct.Mapper;
@@ -17,4 +18,8 @@ public interface ProductMapper {
     Product toEntity(ProductCreate productCreate);
 
     Product toEntity(ProductView ProductView);
+
+    Product toEntity(ProductToCart productToCart);
+
+    ProductToCart toCart(Product product);
 }
