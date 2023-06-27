@@ -1,12 +1,16 @@
 package com.example.demo.services.impl;
 
+import com.example.demo.dtos.CartView;
 import com.example.demo.dtos.UserView;
+import com.example.demo.mappers.CartMapper;
 import com.example.demo.mappers.UserMapper;
 import com.example.demo.models.Cart;
+import com.example.demo.models.CartItem;
 import com.example.demo.models.Product;
 import com.example.demo.models.User;
 import com.example.demo.repositories.CartRepository;
 import com.example.demo.repositories.ProductRepository;
+import com.example.demo.repositories.UserRepository;
 import com.example.demo.services.CartService;
 import com.example.demo.services.UserService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -36,6 +40,12 @@ public class CartServiceImpl implements CartService {
 
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private CartMapper cartMapper;
 
 //    @Override
 //    public Cart createCart(User user, List<Product> products) {
@@ -126,4 +136,16 @@ public class CartServiceImpl implements CartService {
         }
         return cart;
     }
+
+    @Override
+    public CartView getCartByUserId(Long userId) {
+        User user = userRepository.findById(userId).orElseThrow();
+        Cart cart = cartRepository.findByUser(user);
+        return cartMapper.toView(cart);
+    }
+
+//    @Override
+//    public List<CartItem> getCartItems(Cart cart) {
+//        return cartRepository.d;
+//    }
 }

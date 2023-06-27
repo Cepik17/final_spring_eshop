@@ -16,15 +16,15 @@ public class CartItem {
     @OneToOne
     private Product product;
     private int amount;
-    private double totalPrice;
-
-    public void setAmount(int amount) {
-        this.amount = amount;
-        updateTotalPrice();
-    }
-
-    private void updateTotalPrice() {
-        totalPrice = product.getPrice() * amount;
-    }
+    private double price;
+//
+//    public void setAmount(int amount) {
+//        this.amount = amount;
+//        updateTotalPrice();
+//    }
+//
+//    private void updateTotalPrice() {
+//        totalPrice = product.getPrice() * amount;
+//    }
 
 }

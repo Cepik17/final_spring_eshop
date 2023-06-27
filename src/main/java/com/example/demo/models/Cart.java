@@ -20,12 +20,13 @@ public class Cart {
     private User user;
     @OneToMany
     private List<CartItem> cartItems;
+    private double totalCost;
 
-    public double getTotalPrice() {
-        double totalPrice = 0.0;
-        for (CartItem cartItem : cartItems) {
-            totalPrice += cartItem.getTotalPrice();
+    public double getTotalCost() {
+        double totalCost = 0.0;
+        for (CartItem item : cartItems) {
+            totalCost += item.getProduct().getPrice() * item.getAmount();
         }
-        return totalPrice;
+        return totalCost;
     }
 }

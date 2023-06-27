@@ -8,7 +8,7 @@
 
 <!--    <a sec:authorize="isAnonymous()" th:href="@{'/signin'}">SIGN IN</a>-->
 <!--    <a sec:authorize="isAuthenticated()" th:href="@{'/profile'}">Profile</a>-->
-    <div class="row mt-2">
+    <div class="row mt-3">
         <div class="col-4 mx-auto">
             <form class="d-flex" role="search">
                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
@@ -16,22 +16,23 @@
             </form>
         </div>
     </div>
-    <div class="row text-center mt-2">
-        <div class="col-3">
+    <div class="row text-center mt-3">
+
+        <div class="col-3" th:each="product : ${hotproducts}">
             <div class="card mb-4 rounded-3 shadow-sm">
                 <div class="card-header py-3">
-                    <h4 class="my-0 fw-normal">name</h4>
+                    <h4 class="my-0 fw-normal" th:text="${product.getName()}"></h4>
                 </div>
                 <div class="card-body">
-                    <h5 class="card-title pricing-card-title">price</h5>
+                    <h5 class="card-title pricing-card-title" th:text="${product.getPrice()}">price</h5>
                     <ul class="list-unstyled mt-3 mb-4">
-                        <li>Deal of th day:</li>
-                        <li>Rating:</li>
+                        <li>Deal of th day!!!</li>
+                        <li>Rating:<span th:text="${product.getRating()}"></span></li>
                         <li>Comments()</li>
                         <li><a type="button" class="btn btn-lg mt-1 w-50"
-                               style="background-color:#e3f2fd">Details</a></li>
+                               style="background-color:#e3f2fd" th:href="${'/productdetails/'+product.getId()}">Details</a></li>
                     </ul>
-                    <button
+                    <button sec:authorize="isAuthenticated()"
                             type="button" class="btn w-100 btn btn-lg"
                             style="background-color: #e3f2fd">Add to cart</button>
                 </div>

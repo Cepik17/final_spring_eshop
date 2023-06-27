@@ -24,11 +24,11 @@ public class MainController {
 
     @GetMapping("/")
     public String mainPage(Model model){
-//        List<ProductView> productViewList = productService.getAllHotDeals();
-//        model.addAttribute("hotproducts",productViewList);
-        User user =userService.getCurrentUser();
-        Long userId= user.getId();
-        model.addAttribute("userId", userId);
+        List<ProductView> productViewList = productService.getAllHotDeals();
+        model.addAttribute("hotproducts",productViewList);
+//        User user =userService.getCurrentUser();
+//        Long userId= user.getId();
+//        model.addAttribute("userId", userId);
         return "index";
     }
 
@@ -48,4 +48,32 @@ public class MainController {
         return "productdetails";
     }
 
+    @GetMapping("/addproduct")
+    public String addProductPage(){
+        return "addproduct";
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/cart")
+    public String cartPage(Model model){
+        User user =userService.getCurrentUser();
+        model.addAttribute("currentUser", user);
+        return "cart";
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/checkout")
+    public String checkoutPage(Model model){
+        User user =userService.getCurrentUser();
+        model.addAttribute("currentUser", user);
+        return "checkout";
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/orders")
+    public String ordersPage(Model model){
+        User user =userService.getCurrentUser();
+        model.addAttribute("currentUser", user);
+        return "orders";
+    }
 }

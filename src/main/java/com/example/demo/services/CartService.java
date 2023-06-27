@@ -1,7 +1,9 @@
 package com.example.demo.services;
 
+import com.example.demo.dtos.CartView;
 import com.example.demo.dtos.UserView;
 import com.example.demo.models.Cart;
+import com.example.demo.models.CartItem;
 import com.example.demo.models.Product;
 import com.example.demo.models.User;
 import jakarta.servlet.http.HttpServletRequest;
@@ -16,4 +18,8 @@ public interface CartService {
     List<Cart> getAllCarts();
 
     Cart getOrCreateCart(UserView userView);
+
+    CartView getCartByUserId(Long userId);
+
+   // List<CartItem> getCartItems(Cart cart);
 }

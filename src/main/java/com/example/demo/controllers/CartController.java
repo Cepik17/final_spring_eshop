@@ -1,5 +1,6 @@
 package com.example.demo.controllers;
 
+import com.example.demo.dtos.CartView;
 import com.example.demo.dtos.UserView;
 import com.example.demo.models.Cart;
 import com.example.demo.models.Product;
@@ -9,6 +10,7 @@ import com.example.demo.services.CartService;
 import com.example.demo.services.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -35,6 +37,11 @@ public class CartController {
     @GetMapping
     public List<Cart> getAllCarts(){
         return cartService.getAllCarts();
+    }
+
+    @GetMapping("{userId}")
+    public CartView getCartByUserId(@PathVariable Long userId){
+        return cartService.getCartByUserId(userId);
     }
 
 }

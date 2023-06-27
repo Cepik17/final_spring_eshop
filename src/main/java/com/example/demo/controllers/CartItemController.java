@@ -1,5 +1,6 @@
 package com.example.demo.controllers;
 
+import com.example.demo.dtos.CartView;
 import com.example.demo.dtos.ProductToCart;
 import com.example.demo.dtos.UserView;
 import com.example.demo.mappers.ProductMapper;
@@ -40,7 +41,7 @@ public class CartItemController {
 
 
     @PostMapping
-    public Cart addToCart(@RequestBody CartRequest cartRequest){
+    public CartView addToCart(@RequestBody CartRequest cartRequest) {
 //        User user = userService.getEntityById(cartRequest.getUserId());
 //        UserView userView = userMapper.toView(user);
 //
@@ -51,7 +52,20 @@ public class CartItemController {
     }
 
     @GetMapping
-    public List<CartItem> getAllCartItems(){
+    public List<CartItem> getAllCartItems() {
         return cartItemService.getAllCartItems();
+    }
+
+    @PostMapping("/update")
+    public CartView updateCartAmount(@RequestParam(name = "cartId") Long cartId,
+                                     @RequestParam(name = "itemId") Long itemId,
+                                     @RequestParam(name = "newAmount") int newAmount) {
+        return cartItemService.updateCartItem(cartId, itemId, newAmount);
+    }
+
+    @DeleteMapping("/delete")
+    public CartView deleteCartItem(@RequestParam(name = "cartId") Long cartId,
+                                   @RequestParam(name = "itemId") Long itemId){
+        return cartItemService.deleteCartItem(cartId, itemId);
     }
 }

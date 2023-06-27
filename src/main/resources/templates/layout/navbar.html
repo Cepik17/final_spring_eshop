@@ -36,18 +36,20 @@
 <!--                </li>-->
             </ul>
             <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
-                <a class="me-2 py-2 text-dark text-decoration-none" th:href="@{'/cart'}">Cart</a>
+                <a class="me-2 py-2 text-dark text-decoration-none" sec:authorize="isAuthenticated()"
+                   th:href="@{'/cart'}">Cart</a>
                 <ul class="navbar-nav">
 <!--                <a class="me-3 py-2 text-dark text-decoration-none" th:href="@{'/profile'}">Profile</a>-->
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle me-1 py-2 text-dark text-decoration-none" href="#" role="button" data-bs-toggle="dropdown"
+                    <a class="nav-link dropdown-toggle me-1 py-2 text-dark text-decoration-none"
+                       href="#" role="button" data-bs-toggle="dropdown"
                        aria-expanded="false">Profile</a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" th:href="@{'/orders'}">My orders</a></li>
                         <li><a class="dropdown-item" sec:authorize="hasAuthority('Admin')"
                                th:href="@{'/edituser'}">Edit User</a></li>
                         <li><a class="dropdown-item" sec:authorize="hasAuthority('Manager')"
-                               href="#">Add product</a></li>
+                               th:href="@{'/addproduct'}">Add product</a></li>
                         <li><a class="dropdown-item" th:href="@{'/profile'}">Settings</a></li>
                         <!--                        <li>-->
 <!--                            <a class="dropdown-item" href="JavaScript:void(0)" onclick="exitForm.submit()">Logout</a>-->
@@ -58,7 +60,8 @@
                 </ul>
                 <a class="me-3 py-2 text-dark text-decoration-none"
                    sec:authorize="isAnonymous()" th:href="@{'/signin'}">Sign in</a>
-                <a class="py-2 text-dark text-decoration-none" href="JavaScript:void(0)" onclick="exitForm.submit()">Logout</a>
+                <a class="py-2 text-dark text-decoration-none" href="JavaScript:void(0)"
+                   onclick="exitForm.submit()">Logout</a>
                 <form th:action="@{'/logout'}" method="post" id="exitForm"></form>
             </nav>
 <!--            <div class="d-flex">-->

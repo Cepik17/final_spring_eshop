@@ -7,6 +7,7 @@
     <input type="hidden" id="userId" th:value="${currentUser.id}">
     <script type="text/javascript">
         loadProducts()
+
         function loadProducts() {
             let req = new XMLHttpRequest()
             req.open("GET", "http://localhost:8080/api/products/")
@@ -29,9 +30,9 @@
                     html += "<li>Rating: " + array[i].rating + "</li>"
                     html += "<li>Comments(" + array[i].rating + ")</li>"
                     html += "<li><a type=\"button\" class=\"btn btn-lg mt-1 w-50\" style='background-color:#e3f2fd' " +
-                        "href='/productdetails/"+array[i].id+"'>Details</a></li>"
+                        "href='/productdetails/" + array[i].id + "'>Details</a></li>"
                     html += "</ul>"
-                    html += "<button onclick='addToCart("+userId +", "+array[i].id+")' type=\"button\" class=\"btn w-100 btn btn-lg\" " +
+                    html += "<button onclick='addToCart(" + userId + ", " + array[i].id + ")' type=\"button\" class=\"btn w-100 btn btn-lg\" " +
                         "style='background-color: #e3f2fd'>Add to cart</button>"
                     html += "</div>"
                     html += "</div>"
@@ -41,27 +42,35 @@
                 document.getElementById("products").innerHTML = html
             }
         }
-        function addToCart(userId, productId){
-             alert(productId)
+
+        function addToCart(userId, productId) {
             let req = new XMLHttpRequest();
             let createCart = {
                 "userId": userId,
-                "productId" : productId,
-                "amount" : 1,
+                "productId": productId,
+                "amount": 1,
             }
             req.open("POST", "http://localhost:8080/api/cartitems")
             req.setRequestHeader("Content-type", "application/json")
             req.send(JSON.stringify(createCart))
             req.onload = function () {
-           //     location.href="/signin"
-                loadProducts()
+                if (req.status >= 200 && req.status < 300) {
+                    //     location.href="/signin"
+                    alert("Product successfully added to Cart")
+                    loadProducts()
+                } else {
+                    // Если есть ошибка, выводим сообщение об ошибке.
+                    let response = JSON.parse(req.responseText);
+                    alert(response.message);
+                }
             }
-                   }
-        function getCurrentUser(){
+        }
+
+        function getCurrentUser() {
             let req = new XMLHttpRequest();
             req.open("GET", "http://localhost:8080/api/users");
             req.setRequestHeader("Content-type", "application/json");
-            req.onload = function() {
+            req.onload = function () {
                 if (req.status === 200) {
                     let user = JSON.parse(req.responseText);
                     alert(user.name);

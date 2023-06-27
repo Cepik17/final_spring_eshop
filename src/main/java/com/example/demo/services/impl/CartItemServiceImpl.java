@@ -1,8 +1,11 @@
 package com.example.demo.services.impl;
 
+import com.example.demo.dtos.CartView;
 import com.example.demo.dtos.ProductToCart;
 import com.example.demo.dtos.ProductView;
 import com.example.demo.dtos.UserView;
+import com.example.demo.mappers.CartItemMapper;
+import com.example.demo.mappers.CartMapper;
 import com.example.demo.mappers.ProductMapper;
 import com.example.demo.mappers.UserMapper;
 import com.example.demo.models.*;
@@ -42,21 +45,14 @@ public class CartItemServiceImpl implements CartItemService {
     @Autowired
     private UserMapper userMapper;
 
-//    @Override
-//    public void addToCart(Long userId, Long productId, int amount) {
-//        Cart cart = cartService.getOrCreateCart(userId);
-//        ProductView productView = productService.getProductById(productId);
-//        Product product = productMapper.toEntity(productView);
-//        CartItem cartItem = new CartItem();
-//        cartItem.setCart(cart);
-//        cartItem.setProduct(product);
-//        cartItem.setAmount(amount);
-//        //cart.getCartItems().add(cartItem);
-//        cart.setCartItems(List.of(cartItem));
-//        cartRepository.save(cart);
-//    }
+    @Autowired
+    private CartMapper cartMapper;
+
+    @Autowired
+    private CartItemMapper cartItemMapper;
+
     @Override
-    public Cart addToCart(CartRequest cartRequest, int amount) {
+    public CartView addToCart(CartRequest cartRequest, int amount) {
         User user = userService.getEntityById(cartRequest.getUserId());
         UserView userView = userMapper.toView(user);
         Product product = productService.getEntityById(cartRequest.getProductId());
@@ -66,19 +62,16 @@ public class CartItemServiceImpl implements CartItemService {
         CartItem cartItem = findCartItem(cart, productToCart);
         if (cartItem == null) {
             cartItem = new CartItem();
-//            Long productId = productToCart.getId();
-//            String productName= productToCart.getName();
-//            System.out.println("productId = " + productId + "and name" + productName);
-//            Product product = productService.getEntityById(productId);
             cartItem.setProduct(product);
-            //   cartItem.setCart(cart);
-            cartItemRepository.save(cartItem);
+            cartItem.setPrice(product.getPrice());
+            //cartItemRepository.save(cartItem);
             cart.getCartItems().add(cartItem);
         }
         cartItem.setAmount(cartItem.getAmount() + amount);
         cartItemRepository.save(cartItem);
+        cart.setTotalCost(cart.getTotalCost());
         cartRepository.save(cart);
-        return cart;
+        return cartMapper.toView(cart);
     }
 
     @Override
@@ -88,19 +81,34 @@ public class CartItemServiceImpl implements CartItemService {
 
     @Override
     public CartItem findCartItem(Cart cart, ProductToCart productToCart) {
-        // Получаем список всех товаров в корзине
         List<CartItem> cartItems = cart.getCartItems();
-
-        // Проходим по каждому товару в корзине
         for (CartItem item : cartItems) {
-            // Если ID продукта в текущем товаре совпадает с искомым productId
             if (item.getProduct().getId().equals(productToCart.getId())) {
-                // Возвращаем этот товар
                 return item;
             }
         }
-
-        // Если после прохода по всем товарам ничего не найдено, возвращаем null
         return null;
+    }
+
+    @Override
+    public CartView updateCartItem(Long cartId, Long itemId, int newAmount) {
+        Cart cart = cartRepository.findById(cartId).orElseThrow();
+        CartItem cartItem = cartItemRepository.findById(itemId).orElseThrow();
+        cartItem.setAmount(newAmount);
+        cartItemRepository.save(cartItem);
+        cart.setTotalCost(cart.getTotalCost());
+        //Cart updatedCart = cartRepository.save(cart);
+        cartRepository.save(cart);
+        return cartMapper.toView(cart);
+    }
+
+    @Override
+    public CartView deleteCartItem(Long cartId, Long itemId) {
+        Cart cart = cartRepository.findById(cartId).orElseThrow();
+        CartItem cartItem = cartItemRepository.findById(itemId).orElseThrow();
+        cart.getCartItems().remove(cartItem);
+        cartRepository.save(cart);
+        cartItemRepository.delete(cartItem);
+        return cartMapper.toView(cart);
     }
 }
